@@ -1,6 +1,6 @@
 <template>
 <div class="wrapper">
-    <form @submit="sendForm" id="ad-form" method="post">
+    <form @submit="sendForm" class="light-box light-box-sm" id="ad-form" method="post">
         <label for="ad-title" class="required">Title</label><br>
         <input v-model="title" type="text" id="title" name="title" required><br>
         <label for="ad-text" class="required">Text</label><br>
@@ -152,16 +152,6 @@ label {
 #tags,
 #author-name {
     width: 180px;
-}
-
-#ad-form {
-    margin-top: 28px;
-    width: 480px;
-    border-radius: 50px;
-    padding: 10px;
-    background: #d0dbe1;
-    box-shadow: 20px 20px 60px #b1babf,
-        -20px -20px 60px #effcff;
 }
 
 .wrapper {

@@ -47,7 +47,7 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
+    color: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
 }
@@ -56,9 +56,27 @@ export default {
     width: 960px;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .colored {
     background-color: #d0dbe1;
+}
+
+.light-box {
+    margin-top: 28px;
+    border-radius: 50px;
+    padding: 10px;
+    background: #d0dbe1;
+    box-shadow: 20px 20px 60px #b1babf,
+        -20px -20px 60px #effcff;
+}
+
+.light-box-sm {
+    width: 480px;
+}
+
+.light-box-md {
+    width: 720px;
 }
 </style>
