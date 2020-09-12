@@ -1,9 +1,8 @@
 <template>
 <div class="light-box light-box-sm">
     <div class="list">
-
-        <div v-if="adsListData.ads.length">
-            <ul v-for="adData in adsListData.ads" :key="adData.uid">
+        <div v-if="adsListData.length">
+            <ul v-for="adData in adsListData" :key="adData.uid">
                 <li>
                     <AdsListItem v-bind:adData="adData" />
                 </li>
@@ -18,6 +17,9 @@
 
 <script>
 import AdsListItem from '@/components/AdsListItem.vue';
+import axios from 'axios';
+import {eventBus} from '../main.js';
+
 
 const URL = 'http://localhost:8000/'
 
@@ -36,11 +38,9 @@ export default {
 
     methods: {
         getData: function() {
-            const axios = require('axios');
             axios.get(URL + 'ads/')
                 .then((response) => {
-                    this.adsListData = response.data
-                    console.log(response.data);
+                    this.adsListData = response.data.reverse()
                 }).catch((e) => {
                     console.log(e);
                 })
@@ -48,7 +48,10 @@ export default {
     },
     created() {
         this.getData();
-    }
+        eventBus.$on('runUpdate', () => {
+            this.getData();
+        })
+    },
 }
 </script>
 
@@ -63,20 +66,5 @@ ul {
     overflow-x: hidden;
     overflow-y: auto;
     margin-bottom: 20px;
-}
-
-::-webkit-scrollbar {
-    width: 8px;
-    height: 10px;
-
-}
-
-::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    background: rgba(0, 0, 0, 0.5);
-}
-
-::-webkit-scrollbar-thumb:active {
-    background: rgba(85, 87, 144, 0.9);
 }
 </style>

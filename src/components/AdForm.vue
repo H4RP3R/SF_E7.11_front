@@ -22,6 +22,10 @@
 
 <script>
 import axios from 'axios';
+import {
+    eventBus
+} from "../main.js";
+
 
 const URL = 'http://127.0.0.1:8000/';
 
@@ -56,7 +60,11 @@ export default {
                         'tags': this.tags,
                     },
                 }).then(() => {
-
+                    eventBus.$emit('runUpdate')
+                    this.title = '';
+                    this.text = '';
+                    this.author = '';
+                    this.tags = '';
                 }).catch(
                     (e) => {
                         console.log(e);

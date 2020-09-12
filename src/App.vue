@@ -79,4 +79,23 @@ export default {
 .light-box-md {
     width: 720px;
 }
+
+.violet {
+    color: rgba(85, 87, 144, 0.9);
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 10px;
+
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: rgba(85, 87, 144, 0.9);
+}
 </style>
