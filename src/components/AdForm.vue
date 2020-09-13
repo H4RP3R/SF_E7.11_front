@@ -16,6 +16,11 @@
             </div>
         </div>
         <input type="submit" value="Send" class="send-button">
+        <div class="errors" v-if="errors.length">
+            <ul v-for="(error, index) in errors" :key="index">
+                <li class="error">[{{ error }}]</li>
+            </ul>
+        </div>
     </form>
 </div>
 </template>
@@ -79,12 +84,20 @@ export default {
             this.errors = [];
 
             //handle tags
-            if (this.tags.length == 1) {
-                this.tags = [this.tags[0]]
-            } else if (this.tags.length > 1) {
+            if (this.tags.length > 1) {
                 this.tags = this.tags.split(',');
             } else {
                 this.tags = [];
+            }
+
+            if (this.tags.length) {
+                this.tags.forEach((item, i) => {
+                    item.trim()
+                    if (!item) {
+                        this.tags.splice(i)
+                    }
+                });
+
             }
 
             // check tags
@@ -118,41 +131,6 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@515&display=swap');
 
-input[type=text],
-textarea {
-    background-color: #d0dbe1;
-    color: rgba(10, 10, 10, 0.7);
-    border: none;
-    padding: 2px 8px;
-    border-radius: 8px;
-    box-shadow: 0 0 5px rgba(239, 252, 255, 0.4);
-    border: 1px solid rgba(239, 252, 255, 0.4);
-    font-family: 'Comfortaa', cursive;
-
-}
-
-input {
-    text-align: center;
-}
-
-textarea {
-    padding: 8px 8px;
-    resize: vertical;
-}
-
-
-input[type=text]:focus,
-textarea:focus {
-    outline: none;
-    box-shadow: 0 0 5px #effcff;
-    border: 1px solid #effcff;
-}
-
-label {
-    font-family: 'Righteous', cursive;
-    color: rgba(0, 0, 0, 0.6);
-}
-
 #title {
     width: 420px;
 }
@@ -173,40 +151,6 @@ label {
     justify-content: space-around;
 }
 
-.send-button {
-    margin-top: 10px;
-    border-radius: 8px;
-    width: 420px;
-    border: none;
-    background-color: rgba(0, 0, 0, 0.6);
-    -webkit-transition: all 2s;
-    -moz-transition: all 2s;
-    -ms-transition: all 2s;
-    -o-transition: all 2s;
-    transition: all 2s;
-    color: rgba(250, 250, 250, 0.8);
-    font-family: 'Righteous', cursive;
-    font-size: 16px;
-}
-
-.send-button:hover {
-    background-color: rgba(0, 0, 0, 0.4);
-    -webkit-transition: all 2s;
-    -moz-transition: all 2s;
-    -ms-transition: all 2s;
-    -o-transition: all 2s;
-    transition: all 2s;
-}
-
-.send-button:active {
-    outline: none;
-    box-shadow: 2px 2px rgba(255, 255, 255, 0.4);
-    background-color: rgba(85, 87, 144, 0.9);
-    transition: all 0.2s;
-    color: rgba(250, 250, 250, 0.9);
-
-}
-
 ::-webkit-input-placeholder {
     /* Edge */
     color: white;
@@ -219,11 +163,5 @@ label {
 
 ::placeholder {
     color: white;
-}
-
-.required::after {
-    content: " *";
-    font-size: 12px;
-    color: rgba(250, 50, 50, 0.5);
 }
 </style>
