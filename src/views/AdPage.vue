@@ -1,5 +1,6 @@
 <template>
 <div class="wrapper">
+    <ToMain />
     <div class="light-box light-box-sm">
         <div class="inner-border">
             <h1>{{ title }}</h1>
@@ -17,7 +18,7 @@
             </div>
             <div class="ad-info">
                 <span><b class="violet">Author:</b> {{ author }} / </span>
-                <span><b class="violet">At:</b> {{ updated }}</span>
+                <span><b class="violet">At:</b> {{ dt }}</span>
                 <button v-on:click="toggleTags" type="button" class="send-button" name="button">
                     edit tags
                 </button>
@@ -31,6 +32,7 @@
 <script>
 import axios from 'axios';
 import CommentsSection from '@/components/CommentsSection.vue';
+import ToMain from '@/components/LinkToMain.vue';
 
 const URL = 'http://localhost:8000/'
 
@@ -61,11 +63,23 @@ export default {
             } else {
                 return this.tags
             }
+        },
+
+        dt: function() {
+            const t = new Date(this.updated)
+            const year = t.getFullYear()
+            const month = ('0' + t.getMonth()).slice(-2)
+            const date = ('0' + t.getDate()).slice(-2)
+            const hours = ('0' + t.getHours()).slice(-2)
+            const min = ('0' + t.getMinutes()).slice(-2)
+            const sec = ('0' + t.getSeconds()).slice(-2)
+            return `${year}-${month}-${date} ${hours}:${min}:${sec}`
         }
     },
 
     components: {
         CommentsSection,
+        ToMain,
     },
 
     methods: {
@@ -78,7 +92,6 @@ export default {
                     this.tags = response.data.ad.tags;
                     this.updated = response.data.ad.updated;
                     this.comments = response.data.ad.comments;
-                    console.log(response.data.ad);
                 }).catch((e) => {
                     console.log(e);
                 })
@@ -93,7 +106,7 @@ export default {
             }
             this.tagsIsActive = !this.tagsIsActive;
             this.formIsActive = !this.formIsActive;
-            this.updated = false;
+            this.tagsUpdated = false;
         },
         updateTags: function() {
             this.validateForm();
@@ -104,6 +117,7 @@ export default {
             }).then(() => {
                 this.tagsUpdated = true;
                 this.toggleTags();
+                this.getData();
             }).catch((e) => {
                 console.log(e);
             })
@@ -112,10 +126,11 @@ export default {
             this.errors = [];
 
             //handle tags
-            if (this.tags.length > 1) {
+            if (this.tags.length > 1 && typeof this.tags === 'string') {
                 this.tags = this.tags.split(',');
-            } else {
-                this.tags = [];
+            }
+            if (this.tags.length === 0) {
+                this.tags = []
             }
 
             if (this.tags.length) {
@@ -142,7 +157,6 @@ export default {
             if (this.author.length < 3) {
                 this.errors.push('Author name at least 3 characters')
             }
-            console.log(this.tags);
         },
 
     },

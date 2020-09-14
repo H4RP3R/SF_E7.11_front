@@ -6,13 +6,13 @@
         </div>
         <div class="">
             <span><b class="violet">Author:</b> {{ adData.author }} / </span>
-            <span><b class="violet">At:</b> {{ adData.updated }}</span>
+            <span><b class="violet">At:</b><time datetime="2018-07-07">{{ dt }}</time></span>
         </div>
         <div class="">
             <span><b class="violet">uid:</b> {{ adData.uid }}</span>
         </div>
         <span class="tooltiptext">
-            tags: {{ statistics.tags_num }} | comments: {{ this.statistics.comments_num }}
+            tags: {{ statistics.tags_num }} | comments: {{ statistics.comments_num }}
         </span>
     </a>
 </div>
@@ -30,14 +30,27 @@ export default {
 
     data() {
         return {
-            statistics: 'loading statistics...'
+            statistics: '',
+        }
+    },
+
+    computed: {
+        dt: function() {
+            const t = new Date(this.adData.updated)
+            const year = t.getFullYear()
+            const month = ('0' + t.getMonth()).slice(-2)
+            const date = ('0' + t.getDate()).slice(-2)
+            const hours = ('0' + t.getHours()).slice(-2)
+            const min = ('0' + t.getMinutes()).slice(-2)
+            const sec = ('0' + t.getSeconds()).slice(-2)
+            return `${year}-${month}-${date} ${hours}:${min}:${sec}`
         }
     },
 
     methods: {
         getStat: function() {
 
-            axios.get(URL + `ads/${this.adData.uid}/statistic/`)
+            axios.get(URL + `ads/${this.adData.uid}/statistics/`)
                 .then((response) => {
                     this.statistics = response.data
                 }).catch((e) => {

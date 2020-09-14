@@ -18,7 +18,7 @@
                 <div class="comment">
                     <span><b class="violet">{{ comment.author }}</b> said:</span>
                     <span class="comment-text">{{ comment.text }}</span>
-                    <span class="post-time"><b class="red">at:</b> {{ comment.created }}</span>
+                    <span class="post-time"><b class="red">at:</b> {{ dt(comment.created) }}</span>
                 </div>
             </div>
         </div>
@@ -72,6 +72,17 @@ export default {
             }
         },
 
+        dt: function(time) {
+            const t = new Date(time)
+            const year = t.getFullYear()
+            const month = ('0' + t.getMonth()).slice(-2)
+            const date = ('0' + t.getDate()).slice(-2)
+            const hours = ('0' + t.getHours()).slice(-2)
+            const min = ('0' + t.getMinutes()).slice(-2)
+            const sec = ('0' + t.getSeconds()).slice(-2)
+            return `${year}-${month}-${date} ${hours}:${min}:${sec}`
+        },
+
         validateForm: function() {
             this.errors = [];
 
@@ -101,7 +112,7 @@ export default {
 
 .comments {
     margin-top: 20px;
-    max-height: calc(65vh - 190px);
+    height: calc(65vh - 190px);
     overflow-x: hidden;
     overflow-y: auto;
     margin-bottom: 20px;
