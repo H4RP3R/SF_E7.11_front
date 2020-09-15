@@ -75,8 +75,6 @@ export default {
                         console.log(e);
                     }
                 )
-            } else {
-                console.log(this.errors);
             }
         },
 
@@ -86,19 +84,16 @@ export default {
             //handle tags
             if (this.tags.length > 1) {
                 this.tags = this.tags.split(',');
+            }
+
+            if (this.tags.length === 0) {
+                this.tags = []
             } else {
-                this.tags = [];
+                this.tags = [...this.tags]
             }
 
-            if (this.tags.length) {
-                this.tags.forEach((item, i) => {
-                    item.trim()
-                    if (!item) {
-                        this.tags.splice(i)
-                    }
-                });
-
-            }
+            this.tags = this.tags.map(tag => tag.trim());
+            this.tags = this.tags.filter(Boolean);
 
             // check tags
             if (this.tags.length) {
@@ -144,6 +139,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 600px;
 }
 
 .form-bottom {

@@ -67,8 +67,6 @@ export default {
                         console.log(e);
                     }
                 )
-            } else {
-                console.log(this.errors);
             }
         },
 
@@ -102,6 +100,10 @@ export default {
 </script>
 
 <style scoped>
+.wrapper {
+    margin-left: 30px;
+}
+
 .replybtn {
     width: 50px;
     font-size: 11px;
@@ -111,17 +113,19 @@ export default {
 }
 
 .comments {
-    margin-top: 20px;
-    height: calc(65vh - 190px);
+    /* height: calc(65vh - 190px); */
+    max-height: 68vh;
     overflow-x: hidden;
     overflow-y: auto;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .comment {
     display: flex;
     font-size: 14px;
     justify-content: center;
+    text-align: left;
     padding: 4px;
     border-radius: 6px;
     margin: 4px 12px;

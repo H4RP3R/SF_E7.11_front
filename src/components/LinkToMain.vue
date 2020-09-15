@@ -17,13 +17,13 @@ export default {
 
 <style scoped>
 .wrapper {
-    width: 100px;
+    width: 260px;
     height: 80px;
     background-color: rgba(250, 50, 50, 0.4);
     position: absolute;
     top: -65px;
     transition: 0.8s;
-    left: 53%;
+    left: calc(50% - 130px);
 }
 
 .wrapper:hover {

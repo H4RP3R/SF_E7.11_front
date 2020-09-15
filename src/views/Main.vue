@@ -1,8 +1,10 @@
 <template>
-<div class="wrapper">
+<div>
     <ToMain />
-    <AdForm />
-    <AdsList />
+    <div class="wrapper">
+        <AdForm />
+        <AdsList />
+    </div>
 </div>
 </template>
 
@@ -22,5 +24,14 @@ export default {
 </script>
 
 <style scoped>
+.wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    /* flex-wrap: wrap; */
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+}
 
 </style>

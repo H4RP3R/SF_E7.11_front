@@ -10,7 +10,8 @@
 export default {
     data() {
         return {
-            color: '#d0dbe1'
+            color: '#d0dbe1',
+            errors: [],
         }
     },
     methods: {
@@ -128,7 +129,7 @@ label {
 }
 
 .wrapper {
-    width: 960px;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -139,7 +140,6 @@ label {
 }
 
 .light-box {
-    margin-top: 28px;
     border-radius: 50px;
     padding: 10px;
     background: #d0dbe1;
@@ -148,11 +148,11 @@ label {
 }
 
 .light-box-sm {
-    width: 480px;
+    width: 520px;
 }
 
 .light-box-md {
-    width: 720px;
+    max-width: 720px;
 }
 
 .violet {

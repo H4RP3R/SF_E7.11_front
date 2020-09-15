@@ -1,7 +1,7 @@
 <template>
 <div class="wrapper">
     <ToMain />
-    <div class="light-box light-box-sm">
+    <div class="ad light-box light-box-sm">
         <div class="inner-border">
             <h1>{{ title }}</h1>
             <div class="adtext">
@@ -14,6 +14,11 @@
                 <form class="" method="post" v-on:submit.prevent="updateTags">
                     <input type="text" id="tags" name="tags" :bind="tags" v-model="tags">
                     <input type="submit" value="update" class="send-button">
+                    <div class="errors" v-if="errors.length">
+                        <ul v-for="(error, index) in errors" :key="index">
+                            <li class="error">[{{ error }}]</li>
+                        </ul>
+                    </div>
                 </form>
             </div>
             <div class="ad-info">
@@ -53,6 +58,8 @@ export default {
 
             oldTags: [],
             tagsUpdated: false,
+
+            errors: []
         }
     },
 
@@ -93,7 +100,9 @@ export default {
                     this.updated = response.data.ad.updated;
                     this.comments = response.data.ad.comments;
                 }).catch((e) => {
-                    console.log(e);
+                    console.error(e.response.data);
+                    console.error(e.response.status);
+                    console.error(e.response.headers);
                 })
         },
         toggleTags: function() {
@@ -110,17 +119,21 @@ export default {
         },
         updateTags: function() {
             this.validateForm();
-            axios({
-                method: 'post',
-                url: URL + `ads/${this.$route.params.uid}/tags/`,
-                data: this.tags
-            }).then(() => {
-                this.tagsUpdated = true;
-                this.toggleTags();
-                this.getData();
-            }).catch((e) => {
-                console.log(e);
-            })
+            if (!this.errors.length) {
+                axios({
+                    method: 'post',
+                    url: URL + `ads/${this.$route.params.uid}/tags/`,
+                    data: this.tags
+                }).then(() => {
+                    this.tagsUpdated = true;
+                    this.toggleTags();
+                    this.getData();
+                }).catch((e) => {
+                    console.error(e.response.data);
+                    console.error(e.response.status);
+                    console.error(e.response.headers);
+                })
+            }
         },
         validateForm: function() {
             this.errors = [];
@@ -131,17 +144,12 @@ export default {
             }
             if (this.tags.length === 0) {
                 this.tags = []
+            } else {
+                this.tags = [...this.tags]
             }
 
-            if (this.tags.length) {
-                this.tags.forEach((item, i) => {
-                    item.trim()
-                    if (!item) {
-                        this.tags.splice(i)
-                    }
-                });
-
-            }
+            this.tags = this.tags.map(tag => tag.trim());
+            this.tags = this.tags.filter(Boolean);
 
             // check tags
             if (this.tags.length) {
@@ -177,6 +185,19 @@ h1 {
     margin-top: 4px;
 }
 
+.ad {
+    max-height: 94vh;
+    min-width: 480px
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 100vh;
+}
+
 .adtext {
     margin-top: 8px;
 }
@@ -203,10 +224,10 @@ h1 {
 .tags>span {
     background-color: rgba(250, 50, 50, 0.5);
     border-radius: 8px;
-    padding: 0 3px;
+    padding: 4px;
     color: #d0dbe1;
     font-family: 'Comfortaa', cursive;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
 }
 

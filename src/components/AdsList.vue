@@ -62,7 +62,8 @@ ul {
 
 .list {
     margin-top: 20px;
-    height: calc(90vh - 290px);
+    /* height: calc(90vh - 290px); */
+    max-height: 90vh;
     overflow-x: hidden;
     overflow-y: auto;
     margin-bottom: 20px;
