@@ -32,7 +32,7 @@ import {
 } from "../main.js";
 
 
-const URL = 'http://127.0.0.1:8000/';
+const URL = 'http://0.0.0.0:8000/';
 
 export default {
     name: 'AdForm',

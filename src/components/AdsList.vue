@@ -21,7 +21,7 @@ import axios from 'axios';
 import {eventBus} from '../main.js';
 
 
-const URL = 'http://localhost:8000/'
+const URL = 'http://0.0.0.0:8000/'
 
 export default {
     name: 'AdsList',
